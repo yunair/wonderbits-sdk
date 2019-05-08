@@ -1,0 +1,25 @@
+{
+    "source": {
+        "include": [
+            "modules/",
+            "./README.md"
+        ]
+    },
+    "opts": {
+        "template": "node_modules/docdash",
+        "encoding": "utf8",
+        "destination": "./out/",
+        "recurse": true,
+        "verbose": true
+    },
+
+    "docdash": {
+        "static": true,
+        "sort": false,
+        "search": true,
+        "collapse": true,
+        "typedefs": true,
+        "removeQuotes": "none",
+        "scripts": []
+    }
+}
