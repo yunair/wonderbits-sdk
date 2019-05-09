@@ -135,7 +135,12 @@ const _doReport = (cmd) => {
                 resolve(err);
                 return;
             }
+            let timeout = setTimeout(() => {
+                console.log(`获取值失败 >> ${cmd}`)
+                resolve("")
+            }, 3000);
             socket.once(cmd, (data) => {
+                clearTimeout(timeout)
                 let value = data
                 if (value) {
                     value = value.toLowerCase()
@@ -156,7 +161,12 @@ const _doCommand = (cmd) => {
                 resolve(err);
                 return;
             }
+            let timeout = setTimeout(() => {
+                console.log(`发送命令失败 >> ${cmd}`)
+                resolve("")
+            }, 3000);
             socket.once(cmd, (data) => {
+                clearTimeout(timeout)
                 resolve(data);
             });
         });
