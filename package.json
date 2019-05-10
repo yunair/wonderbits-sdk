@@ -1,6 +1,6 @@
 {
     "name": "wonderbits-sdk",
-    "version": "1.0.0",
+    "version": "2.0.1",
     "description": "wonderbits hardware sdk powered by mfeducation",
     "main": "index.js",
     "scripts": {
