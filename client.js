@@ -141,6 +141,13 @@ const _doReport = (cmd) => {
             }, 3000);
             socket.once(cmd, (data) => {
                 clearTimeout(timeout)
+
+                if (data === "wonderbits_failed") {
+                    console.log(`获取值失败 >> ${cmd}`)
+                    resolve("")
+                    return
+                }
+
                 let value = data
                 if (value) {
                     value = value.toLowerCase()
@@ -167,6 +174,11 @@ const _doCommand = (cmd) => {
             }, 3000);
             socket.once(cmd, (data) => {
                 clearTimeout(timeout)
+                if (data === "wonderbits_failed") {
+                    console.log(`获取值失败 >> ${cmd}`)
+                    resolve("")
+                    return
+                }
                 resolve(data);
             });
         });
