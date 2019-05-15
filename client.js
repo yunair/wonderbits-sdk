@@ -170,7 +170,7 @@ const _doCommand = (cmd) => {
             }
             let timeout = setTimeout(() => {
                 console.log(`发送命令失败 >> ${cmd}`)
-                resolve("")
+                resolve("fail")
             }, 3000);
             socket.once(cmd, (data) => {
                 clearTimeout(timeout)
