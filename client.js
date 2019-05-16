@@ -96,7 +96,8 @@ const init = (cb) => {
     /**
      * socket连接成功的回调
      */
-    socket.on('connect', function() {
+    socket.once('connect', function() {
+        console.log("连接服务器成功");
         connectSuccessListeners.forEach(cb => cb())
     });
 
@@ -192,7 +193,7 @@ const _eventRegister = (moduleName, source, callback) => {
 
 const eventUnregister = (moduleName, source) => {
     socket.emit('mfe-message', `${moduleName}.ungister.${source}`);
-    delete eventCallback[`${moduleName}.${source}`]
+    eventCallback[`${moduleName}.${source}`] && delete eventCallback[`${moduleName}.${source}`]
 }
 
 module.exports = {
