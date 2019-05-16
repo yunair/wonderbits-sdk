@@ -5,61 +5,61 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 该函数用于判断SW1是否被按下
+   * @description 判断按键SW1是否被按下
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<bool>} SW1的状态（SW1被按下返回True，否则返回False）
+   * @returns {Promise<bool>} True: 按键被按下 False: 按键没有被按下
    */
   isSw1Pressed(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.is_sw1_pressed()`);
   },
   /**
-   * @description 该函数用于判断SW2是否被按下
+   * @description 判断按键SW2是否被按下
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<bool>} SW2的状态（SW2被按下返回True，否则返回False）
+   * @returns {Promise<bool>} True: 按键按下 False: 按键没有按下
    */
   isSw2Pressed(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.is_sw2_pressed()`);
   },
   /**
-   * @description 该函数用于判断SW3的是否在1这侧
+   * @description 判断SW3的是否在‘1’的位置（‘1’指的是电路上白色的数字）
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<bool>} SW3的状态（开关在1返回True，开关在0返回False）
+   * @returns {Promise<bool>} True: 开关SW3在‘1’位置 False: 开关SW3在‘0’位置
    */
   isSw3At1(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.is_sw3_at_1()`);
   },
   /**
-   * @description 该函数用于判断获取SW4的位置
+   * @description 获取SW4的位置值
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 圆盘电阻器旋转位置，范围0~100
+   * @returns {Promise<int>} 圆盘电阻器SW4的位置 范围 0~100
    */
   getSw4(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.get_sw4()`);
   },
   /**
-   * @description 该函数用于判断获取M1与COM是否导通，导通的判断是根据M1与COM之间的电阻率是否低于阈值，低于阈值判断为导通，高于阈值判断为不导通
+   * @description 判断获取M1与COM是否导通 一般的使用方法是：将连接线插入到控制模块的接头上，实验者一手握住COM线头（黑色），另一手握住M1或M2线头（黄或绿色）。导通时板子上相应指示灯会亮起
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<bool>} M1与COM之间的状态（M1与COM导通返回True，否则返回False）
+   * @returns {Promise<bool>} True: M1与COM之间导通(连接着可导通的介质，如：人体) False: M1与COM之间不导通
    */
   isM1Connected(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.is_m1_connected()`);
   },
   /**
-   * @description 该函数用于判断获取M2与COM是否导通，导通的判断是根据M2与COM之间的电阻率是否低于阈值，低于阈值判断为导通，高于阈值判断为不导通
+   * @description 判断获取M2与COM是否导通 一般的使用方法是：将连接线插入到控制模块的接头上，实验者一手握住COM线头（黑色），另一手握住M1或M2线头（黄或绿色）。导通时板子上相应指示灯会亮起
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<bool>} M1与COM之间的状态（M1与COM导通返回True，否则返回False）
+   * @returns {Promise<bool>} True: M2与COM之间导通(连接着可导通的介质，如：人体) False: M2与COM之间不导通
    */
   isM2Connected(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.is_m2_connected()`);
   },
   /**
-   * @description 设置触摸灵敏度 通过设置灵敏度改变M1，M2的触发阈值 当get_m1_value或get_m2_value小于阈值时则认为M1或M2与COM导通
+   * @description 设置M1和M2灵敏度 灵敏度越高，is_m1_connected() 和is_m2_connected()越容易返回 True
    * @param {int} moduleIndex 模块序号
    * @param {int} limit 灵敏度：0~100
    */
@@ -71,18 +71,18 @@ module.exports = {
     );
   },
   /**
-   * @description 该函数用于获取M1的电阻率
+   * @description 获取M1的电阻率
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} M1的的电阻率，0代表短路，100代表绝缘，范围0~100
+   * @returns {Promise<float>} M1和COM之间的电阻率，值越大代表电阻越大。0代表短路，100代表绝缘 范围 0~100
    */
   getM1Value(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`control${moduleIndex}.get_m1_value()`);
   },
   /**
-   * @description 该函数用于获取M2的电阻率
+   * @description 获取M2的电阻率
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} M2的的电阻率，0代表短路，100代表绝缘，范围0~100
+   * @returns {Promise<float>} M2和COM之间的电阻率，值越大代表电阻越大。0代表短路，100代表绝缘 范围 0~100
    */
   getM2Value(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -91,7 +91,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

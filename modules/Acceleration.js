@@ -5,45 +5,45 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 该函数用于获取加速度传感器检测的x轴加速度值，单位                                                         m/s2
+   * @description 获取x轴加速度值，单位 m/s2
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的x轴加速度值，范围-80~80
+   * @returns {Promise<float>} x轴加速度值，范围 -80~80 m/s2
    */
   getXAcceleration(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`acceleration${moduleIndex}.get_x_acceleration()`);
   },
   /**
-   * @description 该函数用于获取加速度传感器检测的y轴加速度值，单位                                                         m/s2
+   * @description 获取y轴加速度值，单位 m/s2
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的y轴加速度值，范围-80~80
+   * @returns {Promise<float>} y轴加速度值，范围 -80~80 m/s2
    */
   getYAcceleration(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`acceleration${moduleIndex}.get_y_acceleration()`);
   },
   /**
-   * @description 该函数用于获取加速度传感器检测的z轴加速度值，单位                                                         m/s2
+   * @description 获取z轴加速度值，单位 m/s2
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的z轴加速度值，范围-80~80
+   * @returns {Promise<float>} z轴加速度值，范围 -80~80 m/s2
    */
   getZAcceleration(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`acceleration${moduleIndex}.get_z_acceleration()`);
   },
   /**
-   * @description 该函数用于获取加速度传感器检测的x、y、z三轴合加速度值，单位                                                         m/s2
+   * @description 获取x、y、z轴合加速度值，单位 m/s2
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的x、y、z三轴合加速度值，范围-80~80
+   * @returns {Promise<float>} 合加速度，范围-80~80 m/s2
    */
   getAcceleration(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`acceleration${moduleIndex}.get_acceleration()`);
   },
   /**
-   * @description 该函数用于获取加速度传感器检测的x轴角速度值，单位                                                         °/s
+   * @description 获取x轴角速度值，单位 °/s
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的x轴角速度值，范围-1000~1000
+   * @returns {Promise<float>} x轴角速度值，范围-1000~1000 °/s
    */
   getXAngularVelocity(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -52,9 +52,9 @@ module.exports = {
     );
   },
   /**
-   * @description 该函数用于获取加速度传感器检测的y轴角速度值，单位                                                         °/s
+   * @description 获取y轴角速度值，单位 °/s
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的y轴角速度值，范围-1000~1000
+   * @returns {Promise<float>} y轴角速度值，范围-1000~1000 °/s
    */
   getYAngularVelocity(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -63,9 +63,9 @@ module.exports = {
     );
   },
   /**
-   * @description 该函数用于获取加速度传感器检测的z轴角速度值，单位                                                         °/s
+   * @description 获取z轴角速度值，单位 °/s
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 加速度传感器检测的z轴角速度值，范围-1000~1000
+   * @returns {Promise<float>} z轴角速度值，范围-1000~1000 °/s
    */
   getZAngularVelocity(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -74,7 +74,7 @@ module.exports = {
     );
   },
   /**
-   * @description 校准加速度传感器零点                                                          使用该函数时，加速度模块指示灯会在校准执行过程中变为黄色，校准完成后回复原有颜色。                                                                                                               校准过程中需要保证加速度模块且保持静止不动，有汉字的一面朝上。
+   * @description 校准加速度传感器 注意：校准过程中需确保加速度模块且保持静止不动，有汉字的一面朝上。 校准时，模块指示灯会变为黄色，等待指示灯变蓝说明校准完成了。
    * @param {int} moduleIndex 模块序号
    * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
    */
@@ -86,7 +86,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

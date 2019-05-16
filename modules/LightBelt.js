@@ -5,7 +5,7 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 设置灯带上某一段灯的颜色
+   * @description 设置一段LED灯颜色（r,g,b 参数都设置为0时，关闭LED）
    * @param {int} moduleIndex 模块序号
    * @param {int} start 起始位置：1~100
    * @param {int} end 结束位置：1~100
@@ -25,7 +25,7 @@ module.exports = {
     );
   },
   /**
-   * @description 设置灯带上某个灯的颜色
+   * @description 设置单个LED灯颜色（r,g,b 参数都设置为0时，关闭LED）
    * @param {int} moduleIndex 模块序号
    * @param {int} num 灯的位置：1~100
    * @param {int} r 红色：0~255
@@ -45,7 +45,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

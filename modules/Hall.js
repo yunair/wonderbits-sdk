@@ -5,18 +5,18 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 该函数用于获取霍尔检测的磁场强度值
+   * @description 获取磁场强度值
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 霍尔检测的磁场强度值（绝对值表示强度，符号表示方向），范围-100~100
+   * @returns {Promise<float>} 磁场强度值（符号表示方向，绝对值表示强度），范围 -100~100
    */
   getMagnetic(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`hall${moduleIndex}.get_magnetic()`);
   },
   /**
-   * @description 校准霍尔传感器零点 使用该函数时，霍尔模块指示灯会在校准执行过程中变为黄色，校准完成后回复原有颜色。 校准过程中保证没有磁性物体靠近模块，否则会导致校准后的零点不准确。
+   * @description 校准霍尔传感器 注意：校准过程中请确保没有磁性物体靠近模块，否则会导致校准后不准确。 校准时，模块指示灯会变为黄色，等待指示灯变蓝说明校准完成了。
    * @param {int} moduleIndex 模块序号
-   * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
+   * @param {bool} block 阻塞参数  False: 不阻塞 True: 阻塞
    */
   calibrate(moduleIndex, block = true) {
     utils.checkNotNull(moduleIndex);
@@ -26,7 +26,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

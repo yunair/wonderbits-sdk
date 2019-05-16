@@ -5,27 +5,27 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 该函数用于获取模块检测的脉搏，此处的脉搏值表示一分钟脉搏跳动的次数 测量时要求找到模块有汉字的一面，然后将手指轻轻的贴在此面，需要耐心等待一会则会测量出脉搏
+   * @description 获取脉搏（每分钟脉搏跳动次数） 测量时，从正面（有字的那面）将手指轻轻的贴在绿灯上，等待10秒左右方可测得准确的脉搏值
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 模块检测的脉搏，范围40~140
+   * @returns {Promise<int>} 脉搏，范围 40~140
    */
   getHeartRate(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`pulse${moduleIndex}.get_heart_rate()`);
   },
   /**
-   * @description 该函数用于获取脉搏波形队列中未读内容的个数，最多存储10个未读内容
+   * @description 获取脉搏波形队列中未读内容的个数（最多存储10个未读内容） 返回为0时，说明没有未读取的内容
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 脉搏波形队列中未读内容的个数，范围0~10
+   * @returns {Promise<int>} 未读内容的个数，范围 0~10
    */
   getUnreadWaveCount(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`pulse${moduleIndex}.get_unread_wave_count()`);
   },
   /**
-   * @description 该函数用于获取脉搏波形队列中的未读波形值，读取后会删除这个数据 如果没有未读的数据返回上一次的返回值
+   * @description 获取脉搏波形强度值 如果没有未读的数据,则返回上一次的值
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 脉搏波形队列中最早的未读波形值，范围0~255
+   * @returns {Promise<int>} 脉搏波形强度，范围 0~255
    */
   getHeartWave(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -34,7 +34,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

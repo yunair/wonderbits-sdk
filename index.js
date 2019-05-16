@@ -15,6 +15,7 @@ module.exports = {
     rfTelecontroller: require('./modules/RfTelecontroller'),
     signal: require('./modules/Signal'),
     ultrasonic: require('./modules/Ultrasonic'),
+    makeyMakey: require('./modules/MakeyMakey'),
     addResetListener: require("./client").addResetListener,
     clearResetListener: require("./client").clearResetListener,
     addDisconnectListener: require('./client').addDisconnectListener,

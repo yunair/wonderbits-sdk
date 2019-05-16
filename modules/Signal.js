@@ -5,7 +5,7 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 设置LED灯颜色 三个参数都为0时，表示灯不发光
+   * @description 设置LED灯颜色（r,g,b 参数都设置为0时，关闭LED）
    * @param {int} moduleIndex 模块序号
    * @param {int} r 红色：0~255
    * @param {int} g 绿色：0~255
@@ -19,7 +19,7 @@ module.exports = {
     return client._doCommand(`signal${moduleIndex}.set_rgb(${r},${g},${b})`);
   },
   /**
-   * @description 设置蜂鸣器声音频率，单位 Hz 设置频率为0表示关闭蜂鸣器 参数为1~20时发出的是同一个声音
+   * @description 设置蜂鸣器声音频率（Hz） 设置频率为0表示关闭蜂鸣器
    * @param {int} moduleIndex 模块序号
    * @param {int} frequency 频率：0~20000 Hz
    */
@@ -29,7 +29,7 @@ module.exports = {
     return client._doCommand(`signal${moduleIndex}.set_buzzer(${frequency})`);
   },
   /**
-   * @description 设置震动马达的震动幅度 这里的振动幅度没有单位，值越大表示震动幅度越大，参数为0则停止震动
+   * @description 设置震动马达的震动幅度 值越大表示震动幅度越大，设置为0时停止震动
    * @param {int} moduleIndex 模块序号
    * @param {int} strength 振动幅度：0~100
    */
@@ -39,11 +39,11 @@ module.exports = {
     return client._doCommand(`signal${moduleIndex}.set_vibration(${strength})`);
   },
   /**
-   * @description 设置蜂鸣器以一个固定频率发声并保持一段时间后关闭蜂鸣器
+   * @description 控制蜂鸣器发出一个音调，并持续一段时间
    * @param {int} moduleIndex 模块序号
    * @param {int} frequency 频率：20~20000 Hz
-   * @param {int} time 时间: 50~60000 ms
-   * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
+   * @param {float} time 时间: 0.05~60 s
+   * @param {bool} block 阻塞参数：  False: 不阻塞 True: 阻塞
    */
   playANote(moduleIndex, frequency, time, block = false) {
     utils.checkNotNull(moduleIndex);
@@ -57,7 +57,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

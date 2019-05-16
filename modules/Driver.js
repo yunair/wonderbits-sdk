@@ -7,11 +7,11 @@ module.exports = {
   /**
    * @description 设置电机A转动
    * @param {int} moduleIndex 模块序号
-   * @param {int} speed 转速：-100~100  符号不同表示转动方向不同，绝对值为转动速度
-   * @param {int} time 变速时间，从当前转速转变到设置转速用到的时间，单位 ms  默认值为10
-   * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
+   * @param {int} speed 转速：-100~100  符号表示转动方向，绝对值为转动速度
+   * @param {float} time 变速时间，从当前转速转变到设置转速用到的时间，单位 s  默认值为0.01
+   * @param {bool} block 阻塞参数：  False：不阻塞 True：阻塞
    */
-  setMotorA(moduleIndex, speed, time = 10, block = false) {
+  setMotorA(moduleIndex, speed, time = 0.01, block = false) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(speed);
     utils.checkNotNull(time);
@@ -21,7 +21,7 @@ module.exports = {
     );
   },
   /**
-   * @description 设置电机A停止转动
+   * @description 电机A停止转动
    * @param {int} moduleIndex 模块序号
    */
   stopMotorA(moduleIndex) {
@@ -31,11 +31,11 @@ module.exports = {
   /**
    * @description 设置电机B转动
    * @param {int} moduleIndex 模块序号
-   * @param {int} speed 转速：-100~100  符号不同表示转动方向不同，绝对值为转动速度
-   * @param {int} time 变速时间，从当前转速转变到设置转速用到的时间，单位 ms  默认值为10
-   * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
+   * @param {int} speed 转速：-100~100  符号表示转动方向，绝对值为转动速度
+   * @param {float} time 变速时间，从当前转速转变到设置转速用到的时间，单位 s  默认值为10
+   * @param {bool} block 阻塞参数：  False: 不阻塞 True: 阻塞
    */
-  setMotorB(moduleIndex, speed, time = 10, block = false) {
+  setMotorB(moduleIndex, speed, time = 0.01, block = false) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(speed);
     utils.checkNotNull(time);
@@ -45,7 +45,7 @@ module.exports = {
     );
   },
   /**
-   * @description 设置电机B停止转动
+   * @description 电机B停止转动
    * @param {int} moduleIndex 模块序号
    */
   stopMotorB(moduleIndex) {
@@ -91,7 +91,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

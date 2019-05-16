@@ -5,7 +5,7 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 设置彩灯颜色 三个参数都为0时，表示灯不发光
+   * @description 设置彩灯颜色（r,g,b 参数都设置为0时，关闭LED）
    * @param {int} moduleIndex 模块序号
    * @param {int} r 红色：0~255
    * @param {int} g 绿色：0~255
@@ -19,16 +19,16 @@ module.exports = {
     return client._doCommand(`led${moduleIndex}.set_rgb(${r},${g},${b})`);
   },
   /**
-   * @description 设置彩灯由当前颜色渐变到目标颜色
+   * @description 控制彩灯由当前颜色在指定时间渐变到目标颜色
    * @param {int} moduleIndex 模块序号
    * @param {int} r 目标红色：0~255
    * @param {int} g 目标绿色：0~255
    * @param {int} b 目标蓝色：0~255
-   * @param {int} time 渐变时间：0~60000ms  经过这个时间变化到目标颜色
+   * @param {float} time 渐变时间：0~60 s  变化到目标颜色所用的时间
+   * @param {bool} block 阻塞参数：  False: 不阻塞 True: 阻塞
    * @param {int} step 变化次数：  在渐变时间内经过多少次变化达到目标颜色
-   * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
    */
-  fadeToRgb(moduleIndex, r, g, b, time, step = 50, block = false) {
+  fadeToRgb(moduleIndex, r, g, b, time, block = false, step = 50) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(r);
     utils.checkNotNull(g);
@@ -37,13 +37,13 @@ module.exports = {
     utils.checkNotNull(step);
     block = block ? "True" : "False";
     return client._doCommand(
-      `led${moduleIndex}.fade_to_rgb(${r},${g},${b},${time},${step},${block})`
+      `led${moduleIndex}.fade_to_rgb(${r},${g},${b},${time},${block},${step})`
     );
   },
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

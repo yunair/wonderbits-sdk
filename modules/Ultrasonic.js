@@ -5,9 +5,9 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 该函数用于获取超声波检测的距离值，单位：cm
+   * @description 获取超声波检测的距离值（cm）
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<float>} 超声波检测的距离值，范围0~400 cm
+   * @returns {Promise<float>} 距离值，范围 0~400 cm
    */
   getDistance(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -16,7 +16,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

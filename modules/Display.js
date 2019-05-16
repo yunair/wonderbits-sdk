@@ -5,12 +5,12 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 固定位置显示
+   * @description 在某个位置显示内容
    * @param {int} moduleIndex 模块序号
    * @param {int} row 显示行数：1~16
    * @param {int} column 显示列数：1~15
    * @param {str} text 显示内容，可以是字符串，整数，小数
-   * @param {int} size 设置显示的大小，不填写此参数默认为小号字体  SIZE_SMALL为小号字体，值为2 SIZE_BIG为大号字体不支持汉字，值为4
+   * @param {int} size 设置显示的大小，默认为小号字体  SIZE_SMALL：小号字体，值为2 SIZE_BIG：大号字体（不支持汉字），值为4
    */
   print(moduleIndex, row, column, text, size = 2) {
     utils.checkNotNull(moduleIndex);
@@ -24,82 +24,61 @@ module.exports = {
     );
   },
   /**
-   * @description 画点
+   * @description 在指定坐标画一个点 在画点的页使用print函数会导致已经画过的点消失 切换到不同的页码在回到画点的页码也会导致已经画过的点消失
    * @param {int} moduleIndex 模块序号
-   * @param {int} x X轴坐标：1~120
+   * @param {int} x X轴坐标：1~119
    * @param {int} y Y轴坐标：1~32
-   * @param {int} page 显示页数：1~8  默认画点在第1页
-   * @param {int} save 设置画点内容是否保存，不填写此参数默认为不保存  DRAW_NORMAL 为不保存画点内容，值为0 1. 当某页显示画点内容，转到其他页码再转回曾显示画点的页码画点内容将不存在 2. 不能与print在同一页显示   DRAW_SAVED 为保存画点内容，值为1 1. 当某页显示画点内容，转到其他页码再转回曾显示画点的页码画点内容仍会存在 2. 可与print在同一页显示，显示位置冲突时以画点内容为主 3. 使用清屏函数可以清除这样的点
-   * @param {int} color 设置显示点的颜色  有色点值为1 无色点值为0
+   * @param {int} page 显示页数：1~8  默认第1页
    */
-  drawDot(moduleIndex, x, y, page = 1, save = 0, color = 1) {
+  drawDot(moduleIndex, x, y, page = 1) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(x);
     utils.checkNotNull(y);
     utils.checkNotNull(page);
-    utils.checkNotNull(save);
-    utils.checkNotNull(color);
     return client._doCommand(
-      `display${moduleIndex}.draw_dot(${x},${y},${page},${save},${color})`
+      `display${moduleIndex}.draw_dot(${x},${y},${page})`
     );
   },
   /**
-   * @description 画线
+   * @description 通过给定坐标画线段 在画线的页使用print函数会导致已经画过的线消失 切换到不同的页码在回到画线的页码也会导致已经画过的线消失
    * @param {int} moduleIndex 模块序号
-   * @param {int} head_x 起始点X轴坐标：1~120
+   * @param {int} head_x 起始点X轴坐标：1~119
    * @param {int} head_y 起始点Y轴坐标：1~32
-   * @param {int} tail_x 终止点X轴坐标：1~120
+   * @param {int} tail_x 终止点X轴坐标：1~119
    * @param {int} tail_y 终止点Y轴坐标：1~32
-   * @param {int} page 显示页数：1~8  默认画线在第1页
-   * @param {int} save 设置画点内容是否保存，不填写此参数默认为不保存  DRAW_NORMAL 为不保存画点内容，值为0 1. 当某页显示画点内容，转到其他页码再转回曾显示画点的页码画点内容将不存在 2. 不能与print在同一页显示   DRAW_SAVED 为保存画点内容，值为1 1. 当某页显示画点内容，转到其他页码再转回曾显示画点的页码画点内容仍会存在 2. 可与print在同一页显示，显示位置冲突时以画点内容为主 3. 使用清屏函数可以清除这样的点
-   * @param {int} color 设置显示点的颜色  有色点值为1 无色点值为0
+   * @param {int} page 显示页数：1~8  默认第1页
    */
-  drawLine(
-    moduleIndex,
-    head_x,
-    head_y,
-    tail_x,
-    tail_y,
-    page = 1,
-    save = 0,
-    color = 1
-  ) {
+  drawLine(moduleIndex, head_x, head_y, tail_x, tail_y, page = 1) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(head_x);
     utils.checkNotNull(head_y);
     utils.checkNotNull(tail_x);
     utils.checkNotNull(tail_y);
     utils.checkNotNull(page);
-    utils.checkNotNull(save);
-    utils.checkNotNull(color);
     return client._doCommand(
-      `display${moduleIndex}.draw_line(${head_x},${head_y},${tail_x},${tail_y},${page},${save},${color})`
+      `display${moduleIndex}.draw_line(${head_x},${head_y},${tail_x},${tail_y},${page})`
     );
   },
   /**
-   * @description 根据点坐标画折线 使用此函数会以上一次调用的坐标为起点，本次的坐标为终点划线 如果是第一次使用则是在该坐标画一个点
+   * @description 画折线图 以上次传入的坐标为起点，本次坐标为终点画线段。如果是首次使用，则只画单个点
    * @param {int} moduleIndex 模块序号
-   * @param {int} x X轴坐标：1~120
+   * @param {int} x X轴坐标：1~119
    * @param {int} y Y轴坐标：1~32
    * @param {int} page 显示页数：1~8  默认画点在第1页
-   * @param {int} save 设置画点内容是否保存，不填写此参数默认为不保存  DRAW_NORMAL 为不保存画点内容，值为0 1. 当某页显示画点内容，转到其他页码再转回曾显示画点的页码画点内容将不存在 2. 不能与print在同一页显示   DRAW_SAVED 为保存画点内容，值为1 1. 当某页显示画点内容，转到其他页码再转回曾显示画点的页码画点内容仍会存在 2. 可与print在同一页显示，显示位置冲突时以画点内容为主 3. 使用清屏函数可以清除这样的点
-   * @param {int} color 设置显示点的颜色  有色点值为1 无色点值为0
    */
-  drawChart(moduleIndex, x, y, page = 1, save = 0, color = 1) {
+  drawChart(moduleIndex, x, y, page = 1) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(x);
     utils.checkNotNull(y);
     utils.checkNotNull(page);
-    utils.checkNotNull(save);
-    utils.checkNotNull(color);
     return client._doCommand(
-      `display${moduleIndex}.draw_chart(${x},${y},${page},${save},${color})`
+      `display${moduleIndex}.draw_chart(${x},${y},${page})`
     );
   },
   /**
    * @description 转到某页
    * @param {int} moduleIndex 模块序号
-   * @param {int} page 跳转到的页码：1~8
+   * @param {int} page 页码：1~8
    */
   turnToPage(moduleIndex, page) {
     utils.checkNotNull(moduleIndex);
@@ -107,9 +86,9 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.turn_to_page(${page})`);
   },
   /**
-   * @description 清除某页
+   * @description 清除某页显示的内容
    * @param {int} moduleIndex 模块序号
-   * @param {int} page 清除的页码：1~8  默认清除第1页
+   * @param {int} page 清除的页码：1~8  默认第1页
    */
   clearPage(moduleIndex, page = 1) {
     utils.checkNotNull(moduleIndex);
@@ -117,9 +96,9 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.clear_page(${page})`);
   },
   /**
-   * @description 清除全部8页屏幕的内容
+   * @description 清除全部8页显示的内容
    * @param {int} moduleIndex 模块序号
-   * @param {bool} block 阻塞参数：  False表示不阻塞 True表示阻塞
+   * @param {bool} block 阻塞参数：  False: 不阻塞 True: 阻塞
    */
   clearAllPages(moduleIndex, block = false) {
     utils.checkNotNull(moduleIndex);
@@ -127,16 +106,7 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.clear_all_pages(${block})`);
   },
   /**
-   * @description 该函数用于获取翻页按钮状态
-   * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 翻页按钮状态 BUTTON_NONE：没有按键按下，值为1 BUTTON_L：左键按下，值为2 BUTTON_R：右键按下，值为4 BUTTON_M：中键按下，值为8
-   */
-  getButtonState(moduleIndex) {
-    utils.checkNotNull(moduleIndex);
-    return client._doReport(`display${moduleIndex}.get_button_state()`);
-  },
-  /**
-   * @description 禁止翻页按键功能 在开启翻页按键功能的情况下使用该函数可以禁止翻页按键功能，禁止翻页按键功能后将不能通过翻页按键来切换不同页码的显示内容，只能使用turn_to_page函数来切换页码 系统默认开启翻页按键功能
+   * @description 禁止翻页按键功能 禁止翻页按键功能后将不能通过翻页按键来切换不同页码的显示内容 系统默认开启翻页按键功能
    * @param {int} moduleIndex 模块序号
    */
   disablePageTurning(moduleIndex) {
@@ -144,12 +114,21 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.disable_page_turning()`);
   },
   /**
-   * @description 开启翻页按键功能 在禁止翻页按键功能的情况下使用该函数可以开启翻页按键功能 系统默认开启翻页按键功能
+   * @description 开启翻页按键功能 系统默认开启翻页按键功能
    * @param {int} moduleIndex 模块序号
    */
   enablePageTurning(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doCommand(`display${moduleIndex}.enable_page_turning()`);
+  },
+  /**
+   * @description 获取翻页按钮状态
+   * @param {int} moduleIndex 模块序号
+   * @returns {Promise<int>} 翻页按钮状态 BUTTON_NONE：没有按键按下，值为1 BUTTON_L：左键按下，值为2 BUTTON_R：右键按下，值为4 BUTTON_M：中键按下，值为8
+   */
+  getButtonState(moduleIndex) {
+    utils.checkNotNull(moduleIndex);
+    return client._doReport(`display${moduleIndex}.get_button_state()`);
   },
   /**
    * @description 设置显示方向为翻转显示方向，使用该函数后显示内容将会进行180°翻转
@@ -168,7 +147,7 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.set_direction_regular()`);
   },
   /**
-   * @description 隐藏页码滚动指示条，使用该函数后将不会再显示内容界面看到页码滚动指示条 系统默认显示页码滚动指示条
+   * @description 隐藏页码滚动指示条（屏幕右边的白色小点，用于指示当前页码） 系统默认显示页码滚动指示条 隐藏后每行最大显示字符数由15变为16
    * @param {int} moduleIndex 模块序号
    */
   hideScrollbar(moduleIndex) {
@@ -184,7 +163,7 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.show_scrollbar()`);
   },
   /**
-   * @description 禁止自动刷新显示功能 在禁止自动刷新显示功能后只能靠手动刷新显示界面实现更新显示内容 系统默认开启自动刷新显示功能
+   * @description 禁止自动刷新显示功能 禁止自动刷新后，只能调用刷新函数refresh() 才能改变显示内容 系统默认开启自动刷新显示功能
    * @param {int} moduleIndex 模块序号
    */
   disableAutoRefresh(moduleIndex) {
@@ -192,7 +171,7 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.disable_auto_refresh()`);
   },
   /**
-   * @description 开启自动刷新显示功能 在开启自动刷新显示功能后系统将智能识别当前显示内容是否需要更新，如果需要则会更新显示内容 系统默认开启自动刷新显示功能
+   * @description 开启自动刷新显示功能 系统默认开启自动刷新显示功能
    * @param {int} moduleIndex 模块序号
    */
   enableAutoRefresh(moduleIndex) {
@@ -200,7 +179,7 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.enable_auto_refresh()`);
   },
   /**
-   * @description 更新显示内容 在禁止自动刷新显示功能后只能靠该函数来实现手动刷新显示界面实现更新显示内容 系统默认开启自动刷新显示功能
+   * @description 更新一次显示内容 在禁止自动刷新显示功能后只能靠此函数来更新显示内容 系统默认开启自动刷新显示功能
    * @param {int} moduleIndex 模块序号
    */
   refresh(moduleIndex) {
@@ -208,9 +187,61 @@ module.exports = {
     return client._doCommand(`display${moduleIndex}.refresh()`);
   },
   /**
+   * @description 在指定坐标画一个点 画点后始终存在，可以使用清屏擦除 可与print在同一页显示，显示位置冲突时以画点内容为主
+   * @param {int} moduleIndex 模块序号
+   * @param {int} x X轴坐标：1~119
+   * @param {int} y Y轴坐标：1~32
+   * @param {int} page 显示页数：1~8  默认第1页
+   */
+  drawSaveDot(moduleIndex, x, y, page = 1) {
+    utils.checkNotNull(moduleIndex);
+    utils.checkNotNull(x);
+    utils.checkNotNull(y);
+    utils.checkNotNull(page);
+    return client._doCommand(
+      `display${moduleIndex}.draw_save_dot(${x},${y},${page})`
+    );
+  },
+  /**
+   * @description 通过给定坐标画线段 画线后始终存在，可以使用清屏擦除 可与print在同一页显示，显示位置冲突时以画线内容为主
+   * @param {int} moduleIndex 模块序号
+   * @param {int} head_x 起始点X轴坐标：1~119
+   * @param {int} head_y 起始点Y轴坐标：1~32
+   * @param {int} tail_x 终止点X轴坐标：1~119
+   * @param {int} tail_y 终止点Y轴坐标：1~32
+   * @param {int} page 显示页数：1~8  默认第1页
+   */
+  drawSaveLine(moduleIndex, head_x, head_y, tail_x, tail_y, page = 1) {
+    utils.checkNotNull(moduleIndex);
+    utils.checkNotNull(head_x);
+    utils.checkNotNull(head_y);
+    utils.checkNotNull(tail_x);
+    utils.checkNotNull(tail_y);
+    utils.checkNotNull(page);
+    return client._doCommand(
+      `display${moduleIndex}.draw_save_line(${head_x},${head_y},${tail_x},${tail_y},${page})`
+    );
+  },
+  /**
+   * @description 画折线图 以上次传入的坐标为起点，本次坐标为终点画线段。如果是首次使用，则只画单个点
+   * @param {int} moduleIndex 模块序号
+   * @param {int} x X轴坐标：1~119
+   * @param {int} y Y轴坐标：1~32
+   * @param {int} page 显示页数：1~8  默认画点在第1页
+   */
+  drawSaveChart(moduleIndex, x, y, page = 1) {
+    utils.checkNotNull(moduleIndex);
+    utils.checkNotNull(x);
+    utils.checkNotNull(y);
+    utils.checkNotNull(page);
+    return client._doCommand(
+      `display${moduleIndex}.draw_save_chart(${x},${y},${page})`
+    );
+  },
+  /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);

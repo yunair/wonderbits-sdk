@@ -5,36 +5,36 @@ const utils = require("../utils");
  */
 module.exports = {
   /**
-   * @description 该函数用于获取模块检测的温度值，单位 °C
+   * @description 获取温度值（°C）
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 模块检测的温度值，范围-20~100°C
+   * @returns {Promise<int>} 温度值，范围 -20~100°C
    */
   getTemperature(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`observer${moduleIndex}.get_temperature()`);
   },
   /**
-   * @description 该函数用于获取模块检测的湿度值，这里测量的湿度为相对湿度单位 %RH
+   * @description 获取湿度值(%RH）
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 模块检测的湿度值，范围0~100%RH
+   * @returns {Promise<int>} 湿度值，范围 0~100%RH
    */
   getHumidity(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`observer${moduleIndex}.get_humidity()`);
   },
   /**
-   * @description 该函数用于获取模块检测的亮度值，这里的亮度值代表一种量级无单位，值越大代表亮度越强。 用手遮挡住传感器的无光环境监测值为0，使用手机闪光灯发光时对准检测亮度传感器值为100。
+   * @description 获取亮度值 亮度值代表相对强度，值越大代表亮度越强
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 模块检测的温度值，范围0~100
+   * @returns {Promise<int>} 亮度值，范围 0~100
    */
   getLight(moduleIndex) {
     utils.checkNotNull(moduleIndex);
     return client._doReport(`observer${moduleIndex}.get_light()`);
   },
   /**
-   * @description 该函数用于获取模块检测的声音强度值，这里的亮度值代表一种量级无单位，值越大代表声音强度越强。 安静为0，声源需要靠近传感器效果会更好。
+   * @description 获取声音强度值 声音强度值代表相对强度，值越大代表声音越响
    * @param {int} moduleIndex 模块序号
-   * @returns {Promise<int>} 模块检测的温度值，范围0~100
+   * @returns {Promise<int>} 声音强度值，范围 0~100
    */
   getVolume(moduleIndex) {
     utils.checkNotNull(moduleIndex);
@@ -43,7 +43,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise<int>}
+   * @returns {Promise(int)}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);
