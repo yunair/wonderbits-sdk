@@ -16,6 +16,7 @@
     },
     "devDependencies": {
         "docdash": "^1.1.0",
+        "jsdoc": "git+https://github.com/yunair/jsdoc.git",
         "prettier": "^1.17.0"
     }
 }
