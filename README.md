@@ -63,11 +63,11 @@ wonderBitsSdk.模块名.模块方法
 
 具体模块名请参照左侧模块列表。
 
-常用的函数有两类，一类为获取类函数，一类为设置类函数:
+常用的函数有两类，一类为获取类函数，一类为设置类函数(返回类型均为`Promise`):
 
 获取类函数的例子如下:
 
-> 获取超声波检测的距离值(返回值为`Promise`类型)
+> 获取超声波检测的距离值
 
 ```js
 wonderBitsSdk.ultrasonic.getDistance(1).then(distance => {
