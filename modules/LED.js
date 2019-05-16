@@ -43,7 +43,7 @@ module.exports = {
   /**
    * @description 获取当前模块版本号
    * @param  {int} moduleIndex 模块序号
-   * @returns {Promise(int)}
+   * @returns {Promise<int>}
    */
   getFirmwareVersion(moduleIndex) {
     utils.checkNotNull(moduleIndex);
