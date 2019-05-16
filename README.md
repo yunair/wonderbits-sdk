@@ -14,11 +14,17 @@ npm install git+https://github.com/daejong123/wonderbits-sdk.git
 
 ### 第二步
 
-安装对应系统的`MFElink`软件并打开
+根据对应平台选择接入方式:
+
+安装`MFElink`软件并打开的方式:
 
 - [win 64 位](https://pan.baidu.com/s/16FUR-z6bH0-YOnGBxMc1og)
 - [win 32 位](https://pan.baidu.com/s/1xozl-A_m8LLqJXm5IsxTcg)
 - [mac](https://pan.baidu.com/s/1zcCbBiC4hYM2mjCFTKavVw)
+
+集成开发 SDK 的方式:
+
+- [Android](https://github.com/yunair/wonderbits/wiki/%E6%8E%A5%E5%85%A5JS-SDK)
 
 ### 第三步
 
