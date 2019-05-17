@@ -137,7 +137,7 @@ const _doReport = (cmd) => {
                 return;
             }
             let timeout = setTimeout(() => {
-                console.log(`获取值失败 >> ${cmd}`)
+                console.log(`超时,获取值失败 >> ${cmd}`)
                 resolve("")
             }, 3000);
             socket.once(cmd, (data) => {
@@ -170,13 +170,13 @@ const _doCommand = (cmd) => {
                 return;
             }
             let timeout = setTimeout(() => {
-                console.log(`发送命令失败 >> ${cmd}`)
+                console.log(`超时, 发送命令失败 >> ${cmd}`)
                 resolve("fail")
             }, 3000);
             socket.once(cmd, (data) => {
                 clearTimeout(timeout)
                 if (data === "wonderbits_failed") {
-                    console.log(`获取值失败 >> ${cmd}`)
+                    console.log(`发送命令失败 >> ${cmd}`)
                     resolve("")
                     return
                 }
