@@ -102,7 +102,6 @@ module.exports = {
    * @param  {int} moduleIndex 模块序号
    * @param  {int} rgb '红': 1,'绿':2,'蓝':3,'浅蓝':4,'黄':5,'紫':6,'白': 7,'不亮': 8
    */
-
   setOnboardRGB(moduleIndex, rgb) {
     utils.checkNotNull(moduleIndex);
     utils.checkNotNull(rgb);
