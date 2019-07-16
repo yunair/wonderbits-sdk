@@ -16,6 +16,7 @@ module.exports = {
     signal: require('./modules/Signal'),
     ultrasonic: require('./modules/Ultrasonic'),
     makeyMakey: require('./modules/MakeyMakey'),
+    distance: require('./modules/Distance'),
     addResetListener: require("./client").addResetListener,
     clearResetListener: require("./client").clearResetListener,
     addDisconnectListener: require('./client').addDisconnectListener,
