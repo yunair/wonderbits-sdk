@@ -24,7 +24,8 @@ npm install git+https://github.com/daejong123/wonderbits-sdk.git
 
 集成开发 SDK 的方式:
 
-- [Android](https://github.com/yunair/wonderbits/wiki/%E6%8E%A5%E5%85%A5JS-SDK)
+- [Android BLE](https://github.com/yunair/wonderbits/wiki/BLE-%E6%8E%A5%E5%85%A5JS-SDK)
+- [Android USB](https://github.com/yunair/wonderbits/wiki/USB-%E6%8E%A5%E5%85%A5JS-SDK)
 
 ### 第三步
 
