@@ -4,6 +4,7 @@ let eventCallback = {}
 let socket = null;
 
 let resetCallbacks = []
+const runCommandErrorListeners = []
 let connectSuccessListeners = []
 let disconnectListeners = []
 let onOriginDataReceivedCallback = null
@@ -16,6 +17,16 @@ function addResetListener(callback) {
 
 function clearResetListener() {
     resetCallbacks = [];
+}
+
+
+/**
+ * 执行命令出错的事件监听
+ */
+function addRunCommandErrorListener(cb) {
+    if (typeof cb === 'function') {
+        runCommandErrorListeners.push(cb)
+    }
 }
 
 /**
@@ -92,6 +103,13 @@ const init = (cb) => {
         console.log('串口连接失败');
         disconnectListeners.forEach(cb => cb());
     })
+    /**
+     * 命令执行失败的通知
+     */
+    socket.on('mfe-error-communication', (err) => {
+        console.log('执行出错');
+        runCommandErrorListeners.forEach(cb => cb(err));
+    })
 
     /**
      * socket连接成功的回调
@@ -133,19 +151,19 @@ const _doReport = (cmd) => {
     return new Promise((resolve, reject) => {
         socket.emit('mfe-reporter', cmd, (err) => {
             if (err) {
-                resolve(err);
+                reject(err);
                 return;
             }
             let timeout = setTimeout(() => {
                 console.log(`超时,获取值失败 >> ${cmd}`)
-                resolve("")
+                reject("`超时,获取值失败")
             }, 3000);
             socket.once(cmd, (data) => {
                 clearTimeout(timeout)
 
                 if (data === "wonderbits_failed") {
                     console.log(`获取值失败 >> ${cmd}`)
-                    resolve("")
+                    reject("获取值失败")
                     return
                 }
 
@@ -166,18 +184,18 @@ const _doCommand = (cmd) => {
     return new Promise((resolve, reject) => {
         socket.emit('mfe-message', cmd, (err) => {
             if (err) {
-                resolve(err);
+                reject(err);
                 return;
             }
             let timeout = setTimeout(() => {
                 console.log(`超时, 发送命令失败 >> ${cmd}`)
-                resolve("fail")
+                reject("fail")
             }, 3000);
             socket.once(cmd, (data) => {
                 clearTimeout(timeout)
                 if (data === "wonderbits_failed") {
                     console.log(`发送命令失败 >> ${cmd}`)
-                    resolve("")
+                    reject("发送命令失败")
                     return
                 }
                 resolve(data);
@@ -207,5 +225,6 @@ module.exports = {
     addResetListener,
     clearResetListener,
     addConnectSuccessListener,
-    addDisconnectListener
+    addDisconnectListener,
+    addRunCommandErrorListener
 }
