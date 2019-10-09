@@ -1,5 +1,7 @@
 module.exports = {
     initConnection: require('./client').init,
+    doReport: require('./client').doReport,
+    doCommand: require('./client').doCommand,
     setOnOriginDataReceivedCallback: require('./client').setOnOriginDataReceivedCallback,
     getConnectedModuleNames: require('./client').getConnectedModuleNames,
     addResetListener: require("./client").addResetListener,

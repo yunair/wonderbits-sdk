@@ -144,10 +144,10 @@ const init = (cb) => {
 }
 
 const getConnectedModuleNames = () => {
-    return _doReport("system.getModuleInformation()");
+    return doReport("system.getModuleInformation()");
 }
 
-const _doReport = (cmd) => {
+const doReport = (cmd) => {
     return new Promise((resolve, reject) => {
         socket.emit('mfe-reporter', cmd, (err) => {
             if (err) {
@@ -180,7 +180,7 @@ const _doReport = (cmd) => {
     });
 }
 
-const _doCommand = (cmd) => {
+const doCommand = (cmd) => {
     return new Promise((resolve, reject) => {
         socket.emit('mfe-message', cmd, (err) => {
             if (err) {
@@ -216,8 +216,8 @@ const eventUnregister = (moduleName, source) => {
 
 module.exports = {
     init,
-    _doReport,
-    _doCommand,
+    doReport,
+    doCommand,
     getConnectedModuleNames,
     _eventRegister,
     eventUnregister,
