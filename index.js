@@ -2,6 +2,7 @@ module.exports = {
     initConnection: require('./client').init,
     doReport: require('./client').doReport,
     doCommand: require('./client').doCommand,
+    eventRegister: require('./client').eventRegister,
     setOnOriginDataReceivedCallback: require('./client').setOnOriginDataReceivedCallback,
     getConnectedModuleNames: require('./client').getConnectedModuleNames,
     addResetListener: require("./client").addResetListener,
