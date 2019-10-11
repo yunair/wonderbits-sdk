@@ -209,15 +209,20 @@ const doCommand = cmd => {
     });
 };
 
-const eventRegister = (moduleName, source, trigger, value, internal, callback) => {
+const eventRegister = (moduleInstance, source, trigger, value, internal, callback, customs = []) => {
     let triggerValue = Number(trigger);
     if (isNaN(triggerValue)) {
         triggerValue = `'${trigger}'`
     }
-    socket.emit(
-        "mfe-message",
-        `${moduleName}._register.${source}(${eventTarget},${triggerValue}, ${value}, ${internal})`
-    );
+    let needParams = null;
+    if (params instanceof Array) {
+        needParams = customs.join(",")
+    }
+    let params = `${eventTarget},${triggerValue}, ${value}, ${internal}`
+    if (needParams) {
+        params = `${params},${needParams}`
+    }
+    socket.emit("mfe-message", `${moduleInstance}._register.${source}(${params})`);
     // console.log("event", `${moduleName}._register.${source}(${eventTarget},'${trigger}', ${value}, ${internal})`)
     eventCallback[`${eventTarget}`] = callback;
     eventTarget++;
