@@ -3,6 +3,7 @@ module.exports = {
     doReport: require('./client').doReport,
     doCommand: require('./client').doCommand,
     eventRegister: require('./client').eventRegister,
+    eventUnregister: require('./client').eventUnregister,
     setOnOriginDataReceivedCallback: require('./client').setOnOriginDataReceivedCallback,
     getConnectedModuleNames: require('./client').getConnectedModuleNames,
     addResetListener: require("./client").addResetListener,
